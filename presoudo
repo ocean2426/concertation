@@ -1,0 +1,40 @@
+# concertation
+/*----- constants -----*/
+const matchers
+
+
+const WINNING_COMBOS = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6]
+];
+
+/*----- app's state (variables) -----*/
+let board, turn, winner;
+
+/*----- cached element references -----*/
+const message = document.querySelector('h2');
+const playAgainBtn = document.querySelector('button');
+const boardEl = document.getElementById('board');
+console.log(boardEl);
+/*----- event listeners -----*/
+document.getElementById('board').addEventListener('click', handleMove);
+playAgainBtn.addEventListener('click', initialize);
+
+
+/*----- functions -----*/
+initialize();
+
+// Initialize all state variables, then call render()
+function initialize() {
+  board = [null, null, null, null, null, null, null, null, null];
+
+  turn = 1;
+  winner = null;
+  render();
+}

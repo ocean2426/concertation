@@ -77,8 +77,18 @@ function handleClick(evt){
     if (firstCard.img === card.img) {
       // correct match
       firstCard.matched = card.matched = true;
-    } else {
+    } 
+    else {
+      //wrong matches
+      ignoreClick = true;
       numBad++;
+      setTimeout(() => {
+        firstCard.src = CARD_BACK;
+        card.src = CARD_BACK;
+        ignoreClick = false;
+        render();
+    }, 1000)
+      
     }
       firstCard = 0;
   }

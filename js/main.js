@@ -17,14 +17,16 @@ const CARD_BACK = 'https://i.imgur.com/vEOk6lv.jpeg';
 /*----- app's state (variables) -----*/
 let Cards;
 let firstCard; // the first card that was clicked
+let numBad;
+let ignoreClick;
 
 
 /*----- cached element references -----*/
-
+const message = document.querySelector('h3');
 
 
 /*----- event listeners -----*/
-document.querySelector('board').addEventListener('click', handleClick);
+document.getElementById('board').addEventListener('click', handleClick);
 
 
 
@@ -35,6 +37,8 @@ initialize();
 function initialize() {
   Cards = getShuffleCards();
   firstCard = 0;
+  ignoreClick = false;
+  numBad = 0;
   render();
 }
 
@@ -44,6 +48,7 @@ function render() {
     const src = (card.matched || card === firstCard) ? card.img : CARD_BACK;
    cardEl.src = src;
  });
+  message.innerText = `Wrong Guesses: ${numBad}`;
 }
                
 function getShuffleCards() {
@@ -65,25 +70,20 @@ function getShuffleCards() {
 
 
 function handleClick(evt){
-  const card = evt.target;
-  const cardIndex = parseInt(card.id);
-  if (card.src === CARD_BACK) {
-    card.src = Cards[cardIndex].img;
-    if (!firstCard) {
-      firstCard = cardIndex;
+  const cardIndex = parseInt(evt.target.id);
+  if (isNaN(cardIndex) || ignoreClick) return;
+  const card = Cards[cardIndex];
+  if (firstCard) {
+    if (firstCard.img === card.img) {
+      // correct match
+      firstCard.matched = card.matched = true;
     } else {
-      const secondCard = cardIndex;
-      if (Cards[firstCard].img === Cards[secondCard].img) {
-        Cards[firstCard].matched = true;
-        Cards[secondCard].matched = true;
-        firstCard = 0;
-      } else {
-        setTimeout(() => {
-          card.src = CARD_BACK;
-          Cards[firstCard].src = CARD_BACK;
-          firstCard = 0;
-        }, 1000);
-      }
+      numBad++;
     }
+      firstCard = 0;
   }
+  else {
+    firstCard = card;
+  }
+  render();
 }

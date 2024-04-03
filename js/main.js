@@ -25,12 +25,12 @@ let secondCard; // second card play clicked
 
 /*----- cached element references -----*/
 const message = document.querySelector('h3');
+const playAgin = document.querySelector('button')
 
 
 /*----- event listeners -----*/
 document.querySelector('section').addEventListener('click', handleClick);
-
-
+playAgin.addEventListner('click', initialize);
 /*----- functions -----*/
 initialize();
 
@@ -56,9 +56,10 @@ function render() {
   if (winner) {
     message.innerText = `You got all of them!`;
   }
-  if (numBad > 10) {
+  if (numBad > 10){
     message.innerText = 'Awe, To Many Wrong Guesses';
   }
+  playAgin = document.querySelector('button');
 }
 
 function getShuffleCards() {
@@ -71,7 +72,6 @@ function getShuffleCards() {
     const randomIndex = Math.floor(Math.random() * tempCards.length);
     let card = tempCards.splice(randomIndex, 1)[0];
     cards.push(card);
-    const reset = [document.getElementById('play-again')];
   }
   return cards;
 }
@@ -91,22 +91,21 @@ function handleClick(evt) {
         secondCard = 0;
         //how you know who have won
         if (Cards.every(card => card.matched)) {
-          winner = true;
+          winner = true; 
         }
       } else {
         //wrong matches
         ignoreClick = true;
         firstCard.matched = true;
         numBad++;
-        numBad === maxBad;
+        numBad===maxBad;
         setTimeout(() => {
           ignoreClick = false;
           firstCard.matched = false;
-          firstCard = null;
-          secondCard = null;
+         firstCard = null;
+         secondCard = null;
           render();
         }, 1000)
-
       }
     }
   } else {

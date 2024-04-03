@@ -42,9 +42,7 @@ section > img {
   object-fit: cover;
   border: 0.1vmin solid grey;
 }
-section > img.avail:hover {
-  border-color: grey;
-}
+
 CARDS_BACK {
   display: flex;
   grid-template-columns: repeat(4, 20vmin);

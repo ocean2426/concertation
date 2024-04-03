@@ -23,14 +23,12 @@ let ignoreClick;
 let winner;
 let secondCard; // second card play clicked
 
-
 /*----- cached element references -----*/
 const message = document.querySelector('h3');
 
 
 /*----- event listeners -----*/
 document.querySelector('section').addEventListener('click', handleClick);
-document.querySelector('button').addEventListener('click', resetGame);
 
 
 /*----- functions -----*/
@@ -42,8 +40,8 @@ function initialize() {
   firstCard = 0;
   secondCard = 0;
   ignoreClick = false;
+  numBad = 0;
   maxBad = 10;
-  numBad = maxBad = 10;
   winner = false;
   render();
 }
@@ -57,10 +55,12 @@ function render() {
   message.innerText = `Wrong Guesses: ${numBad}`;
   if (winner) {
     message.innerText = `You got all of them!`;
-    message.innerHTML = 'Awe, To Many Wrong Guesses';
-    return winner = false;
+  }
+  if (numBad > 10) {
+    message.innerText = 'Awe, To Many Wrong Guesses';
   }
 }
+
 function getShuffleCards() {
   const tempCards = [];
   const cards = [];
@@ -71,12 +71,11 @@ function getShuffleCards() {
     const randomIndex = Math.floor(Math.random() * tempCards.length);
     let card = tempCards.splice(randomIndex, 1)[0];
     cards.push(card);
+    const reset = [document.getElementById('play-again')];
   }
-
-
   return cards;
-
 }
+
 function handleClick(evt) {
   const cardIndex = parseInt(evt.target.id);
   const card = Cards[cardIndex];
@@ -98,7 +97,8 @@ function handleClick(evt) {
         //wrong matches
         ignoreClick = true;
         firstCard.matched = true;
-        numBad--;
+        numBad++;
+        numBad === maxBad;
         setTimeout(() => {
           ignoreClick = false;
           firstCard.matched = false;
@@ -113,6 +113,4 @@ function handleClick(evt) {
     firstCard = card;
   }
   render();
-} function resetGame(evt) {
-  const reset = document.querySelector('button');
 }

@@ -1,62 +1,70 @@
 /* style.css */
 
-* {
-    box-sizing: gird;
-  }
+*{
+  box-sizing: gird;
+}
+
+body {
+  height: 100vh;
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url("https://i.imgur.com/C6PL9tB.jpeg")
   
-  body {
-    height: 100vh;
-    margin: 10;
-    font-family: 'Open Sans', sans-serif;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-image: url("https://i.imgur.com/C6PL9tB.jpeg")
-    
-  }
-  
-  header {
-    font-size: 6vmin;
-    color: deeppink;
-    letter-spacing: 1vmin;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  
-  #board {
-    display: grid;
-    grid-template-columns: repeat(4, 20vmin);
-    grid-template-rows: repeat(4, 20vmin);
-    background-color: lightgrey;
-    border-radius: 5vmin;
-  }
-  
-  
-  #board > div {
-    margin: 3vmin;
-    background-color: white;
-    border: 1vmin solid white;
-    border-radius: 0%;
-  }
-  
-  #board > div.avail:hover {
-    border-color: grey;
-  }
-  
-  button {
-    margin-top: 4vmin;
-    padding: 2vmin;
-    font-size: 2vmin;
-    border-radius: 4vmin;
-    border: 0.1vmin solid BlueViolet;
-    color: black;
-  }
-  
-  button:hover {
-    color: blue;
-    background-color: blue
-  }
+}
+
+header {
+  font-size: 6vmin;
+  color: deeppink;
+  letter-spacing: 1vmin;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+section {
+  display: grid;
+  grid-template-columns: repeat(4, 20vmin);
+  grid-template-rows: repeat(4, 20vmin);
+  background-color: lightgrey;
+  border-radius: 5vmin;
+}
+
+section > img {
+  border-radius: 0%;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  margin: auto;
+  object-fit: cover;
+  border: 0.1vmin solid grey;
+}
+section > img.avail:hover {
+  border-color: grey;
+}
+CARDS_BACK {
+  display: flex;
+  grid-template-columns: repeat(4, 20vmin);
+  grid-template-rows: repeat(4, 20vmin);
+  border-radius: 0%;
+  margin: 3vmin;
+  background-color: white;
+  border: 1vmin solid white;
+}
+
+button {
+  margin-top: 4vmin;
+  padding: 2vmin;
+  font-size: 2vmin;
+  border-radius: 4vmin;
+  border: 0.1vmin solid BlueViolet;
+  color: black;
+}
+
+button:hover {
+  color: blue;
+  background-color: blue
+}

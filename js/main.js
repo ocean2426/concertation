@@ -30,7 +30,7 @@ const message = document.querySelector('h3');
 
 /*----- event listeners -----*/
 document.querySelector('section').addEventListener('click', handleClick);
-
+document.querySelector('button').addEventListener('click', resetGame);
 
 
 /*----- functions -----*/
@@ -42,8 +42,8 @@ function initialize() {
   firstCard = 0;
   secondCard = 0;
   ignoreClick = false;
-  numBad = 0;
   maxBad = 10;
+  numBad = maxBad = 10;
   winner = false;
   render();
 }
@@ -57,12 +57,10 @@ function render() {
   message.innerText = `Wrong Guesses: ${numBad}`;
   if (winner) {
     message.innerText = `You got all of them!`;
-  }
-  if (winner){
-    message.innerText = `Awe, to many wrong guesses!`;
+    message.innerHTML = 'Awe, To Many Wrong Guesses';
+    return winner = false;
   }
 }
-
 function getShuffleCards() {
   const tempCards = [];
   const cards = [];
@@ -95,20 +93,17 @@ function handleClick(evt) {
         //how you know who have won
         if (Cards.every(card => card.matched)) {
           winner = true;
-        } else{
-          maxBad = maxBad - 1;
-          winner = false;
         }
       } else {
         //wrong matches
         ignoreClick = true;
         firstCard.matched = true;
-        numBad++;
+        numBad--;
         setTimeout(() => {
           ignoreClick = false;
           firstCard.matched = false;
-         firstCard = null;
-         secondCard = null;
+          firstCard = null;
+          secondCard = null;
           render();
         }, 1000)
 
@@ -118,4 +113,6 @@ function handleClick(evt) {
     firstCard = card;
   }
   render();
+} function resetGame(evt) {
+  const reset = document.querySelector('button');
 }

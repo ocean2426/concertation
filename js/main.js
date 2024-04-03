@@ -18,6 +18,7 @@ const CARD_BACK = 'https://i.imgur.com/vEOk6lv.jpeg';
 let Cards;
 let firstCard; // the first card that was clicked
 let numBad;
+let maxBad;
 let ignoreClick;
 let winner;
 let secondCard; // second card play clicked
@@ -25,7 +26,6 @@ let secondCard; // second card play clicked
 
 /*----- cached element references -----*/
 const message = document.querySelector('h3');
-
 
 
 /*----- event listeners -----*/
@@ -43,6 +43,7 @@ function initialize() {
   secondCard = 0;
   ignoreClick = false;
   numBad = 0;
+  maxBad = 10;
   winner = false;
   render();
 }
@@ -56,8 +57,9 @@ function render() {
   message.innerText = `Wrong Guesses: ${numBad}`;
   if (winner) {
     message.innerText = `You got all of them!`;
-
-
+  }
+  if (winner){
+    message.innerText = `Awe, to many wrong guesses!`;
   }
 }
 
@@ -90,10 +92,12 @@ function handleClick(evt) {
         firstCard.matched = secondCard.matched = true;
         firstCard = 0;
         secondCard = 0;
-        //how you have won
-        if (Cards.every(card => card.matched)){
+        //how you know who have won
+        if (Cards.every(card => card.matched)) {
           winner = true;
-          
+        } else{
+          maxBad = maxBad - 1;
+          winner = false;
         }
       } else {
         //wrong matches

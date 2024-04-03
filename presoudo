@@ -1,30 +1,36 @@
-# concertation
 /*----- constants -----*/
-const matchers
-
-
-const WINNING_COMBOS = [
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  [0, 4, 8],
-  [2, 4, 6]
+//i have you each card twice
+// then shuffled and used for the game
+const SEACEATURES_CARDS = [
+  { img: 'https://i.imgur.com/dV1hFFZ.png', matched: false }, //turtle
+  { img: 'https://i.imgur.com/ILbJCgk.png', matched: false }, //jellyfish
+  { img: 'https://i.imgur.com/RAJv494.jpeg', matched: false }, //seahorse
+  { img: 'https://i.imgur.com/Hcyeojg.jpeg', matched: false }, //octopus
+  { img: 'https://i.imgur.com/sS70g3z.jpeg', matched: false }, //dolphin
+  { img: 'https://i.imgur.com/6nznLgUb.jpg', matched: false }, //shark
+  { img: 'https://i.imgur.com/eePPb6T.jpeg', matched: false }, //mermaid
+  { img: 'https://i.imgur.com/xHGu5nP.jpeg', matched: false } //crab
 ];
 
+const CARD_BACK = 'https://i.imgur.com/vEOk6lv.jpeg';
+
 /*----- app's state (variables) -----*/
-let board, turn, winner;
+let Cards;
+let firstCard; // the first card that was clicked
+let numBad;
+let ignoreClick;
+let winner;
+let secondCard; // second card play clicked
+
 
 /*----- cached element references -----*/
-const message = document.querySelector('h2');
-const playAgainBtn = document.querySelector('button');
-const boardEl = document.getElementById('board');
-console.log(boardEl);
+const message = document.querySelector('h3');
+
+
+
 /*----- event listeners -----*/
-document.getElementById('board').addEventListener('click', handleMove);
-playAgainBtn.addEventListener('click', initialize);
+document.querySelector('section').addEventListener('click', handleClick);
+
 
 
 /*----- functions -----*/
@@ -32,9 +38,11 @@ initialize();
 
 // Initialize all state variables, then call render()
 function initialize() {
-  board = [null, null, null, null, null, null, null, null, null];
-
-  turn = 1;
-  winner = null;
+  Cards = getShuffleCards();
+  firstCard = 0;
+  secondCard = 0;
+  ignoreClick = false;
+  numBad = 0;
+  winner = false;
   render();
 }

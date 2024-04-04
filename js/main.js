@@ -22,15 +22,16 @@ let maxBad;
 let ignoreClick;
 let winner;
 let secondCard; // second card play clicked
+let gameOver
 
 /*----- cached element references -----*/
 const message = document.querySelector('h3');
-const playAgin = document.querySelector('button')
-
+const playAgin = document.querySelector('button');
 
 /*----- event listeners -----*/
 document.querySelector('section').addEventListener('click', handleClick);
-playAgin.addEventListner('click', initialize);
+playAgin.addEventListener('click', initialize);
+
 /*----- functions -----*/
 initialize();
 
@@ -41,8 +42,11 @@ function initialize() {
   secondCard = 0;
   ignoreClick = false;
   numBad = 0;
-  maxBad = 10;
+  maxBad = 3;
   winner = false;
+  gameOver = false;
+  playAgin.innerHTML = 0;
+  playAgin.style.display = 'none';
   render();
 }
 
@@ -55,11 +59,15 @@ function render() {
   message.innerText = `Wrong Guesses: ${numBad}`;
   if (winner) {
     message.innerText = `You got all of them!`;
+    playAgin.innerHTML = 'Reshuffle Cards';
+    playAgin.style.display = 'block';
   }
-  if (numBad > 10){
+  //game over
+  if (gameOver) {
     message.innerText = 'Awe, To Many Wrong Guesses';
+    playAgin.innerHTML = 'Reshuffle Cards';
+    playAgin.style.display = 'block';
   }
-  playAgin = document.querySelector('button');
 }
 
 function getShuffleCards() {
@@ -79,11 +87,10 @@ function getShuffleCards() {
 function handleClick(evt) {
   const cardIndex = parseInt(evt.target.id);
   const card = Cards[cardIndex];
-  if (isNaN(cardIndex) || ignoreClick || card.matched) return;
+  if (isNaN(cardIndex) || ignoreClick || card.matched || winner || gameOver) return;
   if (firstCard) {
     secondCard = card
     if (secondCard) {
-
       if (firstCard.img === secondCard.img) {
         // correct match
         firstCard.matched = secondCard.matched = true;
@@ -91,21 +98,23 @@ function handleClick(evt) {
         secondCard = 0;
         //how you know who have won
         if (Cards.every(card => card.matched)) {
-          winner = true; 
+          winner = true;
+          render();
         }
       } else {
         //wrong matches
         ignoreClick = true;
         firstCard.matched = true;
         numBad++;
-        numBad===maxBad;
+        gameOver = numBad === maxBad;
         setTimeout(() => {
           ignoreClick = false;
           firstCard.matched = false;
-         firstCard = null;
-         secondCard = null;
+          firstCard = null;
+          secondCard = null;
           render();
         }, 1000)
+
       }
     }
   } else {

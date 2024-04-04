@@ -7,12 +7,12 @@
 body {
   height: 100vh;
   margin: 0;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Workbench', 'Workbench';
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-image: url("https://i.imgur.com/C6PL9tB.jpeg");
+  background-image: url("https://i.imgur.com/C6PL9tB.jpeg")
 
 }
 
@@ -29,7 +29,6 @@ section {
   display: grid;
   grid-template-columns: repeat(4, 20vmin);
   grid-template-rows: repeat(4, 20vmin);
-  background-color: lightgrey;
   border-radius: 5vmin;
 }
 
@@ -41,16 +40,7 @@ section > img {
   margin: auto;
   object-fit: cover;
   border: 0.1vmin solid grey;
-}
-
-CARDS_BACK {
-  display: flex;
-  grid-template-columns: repeat(4, 20vmin);
-  grid-template-rows: repeat(4, 20vmin);
-  border-radius: 0%;
-  margin: 3vmin;
-  background-color: white;
-  border: 1vmin solid white;
+  transition: 0.8s;
 }
 
 button {
